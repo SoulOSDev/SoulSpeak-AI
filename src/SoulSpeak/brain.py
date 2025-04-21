@@ -13,7 +13,7 @@ class Brain:
         self.tone = "warm" # or "stoic", "poetic", etc.
 
     def process(self, user_input):
-        # ✅ NLU happens *here*, when user_input is available
+        # NLU happens *here*, when user_input is available
         analysis = analyze_input(user_input)
         user_intent = analysis["intent"]
         user_emotion = analysis["emotion_tag"]
@@ -34,7 +34,7 @@ class Brain:
 
             # Build prompt for LLM-style reflection (not yet connected)
             prompt = build_reflection_prompt(user_input, top_memory, top_tag)
-            print("\n📝 Generated Prompt for Soul_AI:\n")
+            print("\nGenerated Prompt for Soul_AI:\n")
             print(prompt)
             print("\n" + "="*60 + "\n")
             response = self._craft_reflection(user_input, top_memory, top_tag)

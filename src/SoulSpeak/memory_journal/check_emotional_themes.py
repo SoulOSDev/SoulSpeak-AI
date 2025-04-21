@@ -128,7 +128,7 @@ def compare_emotional_trends(memories: List[dict], window_size=5) -> str:
         
     return f"{sentiment_trend} {rising_statement}"
 
-# 🧪 Test with natural reflection
+# Test with natural reflection
 if __name__ == "__main__":
         memories = load_memories()
         tag_summary = summarize_recent_emotions(memories, limit=10)

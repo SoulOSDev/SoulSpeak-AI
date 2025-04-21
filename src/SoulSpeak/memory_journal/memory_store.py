@@ -36,9 +36,9 @@ def archive_old_memories(days_old=30,
         with open(active_path, "w", encoding="utf-8") as f:
             json.dump(keep, f, indent=2)
 
-        print(f"📦 Archived {len(archive)} old memories.")
+        print(f"Archived {len(archive)} old memories.")
     else:
-        print("🧼 No memories needed archiving.")
+        print("No memories needed archiving.")
 
 # Optional: You might want to adjust weight differently later
 def calculate_weight(score, tags):

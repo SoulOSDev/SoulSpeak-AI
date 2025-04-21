@@ -14,10 +14,10 @@ def main():
     for text in test_inputs:
         mem.add_memory(text)
 
-    print("\n🧠 Recent Memories with Weights:")
+    print("\nRecent Memories with Weights:")
     for i, memory in enumerate(mem.memory[-5:], start=1):
-        print(f"{i}. 📝 {memory['text']}")
-        print(f"   🏋️ Weight: {memory.get('weight', 'N/A')}")
+        print(f"{i}. {memory['text']}")
+        print(f"   Weight: {memory.get('weight', 'N/A')}")
         print("")
 
 if __name__ == "__main__":

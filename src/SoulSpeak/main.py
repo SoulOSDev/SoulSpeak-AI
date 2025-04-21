@@ -26,10 +26,10 @@ def main():
                 break
 
             response = brain.process(user_input)
-            print(f"🧠 Soul_AI: {response}\n")
+            print(f"Soul_AI: {response}\n")
 
         except KeyboardInterrupt:
-            print("\n🕯️ Soul_AI: Conversation interrupted. Until next time.")
+            print("\nSoul_AI: Conversation interrupted. Until next time.")
             break
 
 if __name__ == "__main__":

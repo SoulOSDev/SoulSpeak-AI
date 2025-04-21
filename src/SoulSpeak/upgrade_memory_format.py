@@ -20,12 +20,12 @@ def upgrade_memory(memory_list):
                 "weight": 1.0
             })
         else:
-            print(f"⚠️ Skipped unknown memory format: {item}")
+            print(f"Skipped unknown memory format: {item}")
     return upgraded
 
 def load_memory_store():
     if not os.path.exists(STORE_PATH):
-        print("❌ No memory store found to upgrade.")
+        print("No memory store found to upgrade.")
         return []
     with open(STORE_PATH, "rb") as f:
         return pickle.load(f)
@@ -33,10 +33,10 @@ def load_memory_store():
 def save_memory_store(data):
     with open(STORE_PATH, "wb") as f:
         pickle.dump(data, f)
-    print(f"✅ Memory store upgraded and saved. Total entries: {len(data)}")
+    print(f"Memory store upgraded and saved. Total entries: {len(data)}")
 
 if __name__ == "__main__":
-    print("🔄 Upgrading legacy memory format...")
+    print("Upgrading legacy memory format...")
     original = load_memory_store()
     upgraded = upgrade_memory(original)
     save_memory_store(upgraded)

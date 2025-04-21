@@ -67,7 +67,7 @@ def soul_speak_pipeline(user_input: str) -> dict:
         "memory": memory
     }
 
-# 🧪 Optional test
+# Optional test
 if __name__ == "__main__":
     test_input = "Lately, I've been feeling more like myself again."
     result = soul_speak_pipeline(test_input)

@@ -1,6 +1,6 @@
 import requests
 import random
-# 🔹 Choose tone based on emotion tags
+# Choose tone based on emotion tags
 def choose_tone(tags):
     if any(tag in tags for tag in ["hopeful", "grateful", "fulfilled", "loving"]):
         return "warm and uplifting"
@@ -13,7 +13,7 @@ def choose_tone(tags):
     else:
         return "calm and present"
 
-# 🔹 Build a reflection prompt
+# Build a reflection prompt
 def generate_reflection_prompt(memory):
     tone = choose_tone(memory["tags"])
     
@@ -65,7 +65,7 @@ Do not ask questions. Speak as if you truly understand.
 """
     return prompt.strip()
 
-# 🔹 Send prompt to Mistral
+# Send prompt to Mistral
 def generate_reflection(memory):
     prompt = generate_reflection_prompt(memory)
 

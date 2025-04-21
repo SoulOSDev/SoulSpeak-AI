@@ -1,6 +1,6 @@
 from memory_journal.memory_store import search_memories
 
-print("\n📜 Showing all stored memories...")
+print("\nShowing all stored memories...")
 
 matches = search_memories()
 
@@ -9,5 +9,5 @@ if not matches:
 else:
     for mem in matches:
         print(f"{mem['timestamp']} - {mem['tags']}")
-        print(f"📝 {mem['text']}")
+        print(f"{mem['text']}")
         print("-" * 50)

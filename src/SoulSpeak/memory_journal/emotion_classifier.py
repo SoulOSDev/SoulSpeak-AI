@@ -1,6 +1,6 @@
 import requests
 
-# 🔹 Emotion tag list
+# Emotion tag list
 emotion_tags = [
     "joyful", "grateful", "inspired", "hopeful", "radiant", "proud", "playful", "loving", "compassionate",
     "devoted", "tender", "at peace", "whole", "centered", "secure", "welcoming", "fulfilled", "excited",
@@ -11,7 +11,7 @@ emotion_tags = [
     "jealous", "bitter", "resentful", "hollow", "insecure", "vulnerable", "lost", "powerless", "grieving"
 ]
 
-# 🔹 Prompt builder
+# Prompt builder
 def generate_emotion_prompt(text):
     return f"""
 You are an emotionally intelligent AI. A user just shared this message:
@@ -25,7 +25,7 @@ From the list of emotions below, return the 1 to 3 most accurate emotional tags 
 Respond with a comma-separated list of the selected emotion tags only.
 """
 
-# 🔹 Send to Mistral
+# Send to Mistral
 def classify_emotions_mistral(text):
     prompt = generate_emotion_prompt(text)
     response = requests.post(
@@ -40,7 +40,7 @@ def classify_emotions_mistral(text):
     result = response.json()["response"].strip()
     return [tag.strip() for tag in result.split(',') if tag.strip() in emotion_tags]
 
-# 🔹 Test (optional)
+# Test (optional)
 if __name__ == "__main__":
     from SoulSpeak.memory_journal.preprocess import preprocess
     test_input = "I finally feel like things are getting better."
@@ -48,7 +48,7 @@ if __name__ == "__main__":
     tags = classify_emotions_mistral(clean_text)
     print("Emotion tags:", tags)
 
-   # 🔹 Build a prompt to rate sentiment
+   # Build a prompt to rate sentiment
 def generate_sentiment_prompt(text):
     return f"""
 Rate the overall emotional sentiment of the following message on a scale from -1.0 to +1.0:
@@ -63,7 +63,7 @@ Message:
 Respond with a single number only.
 """
 
-# 🔹 Send sentiment request to Mistral
+# Send sentiment request to Mistral
 def classify_sentiment_mistral(text):
     prompt = generate_sentiment_prompt(text)
     response = requests.post(

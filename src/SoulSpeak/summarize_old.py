@@ -1,7 +1,7 @@
 from memory_journal.summarize_archive import generate_archive_summary
 import requests
 
-# 🔄 Choose: "archive", "active", or "all"
+# Choose: "archive", "active", or "all"
 SOURCE_MODE = "all"
 
 prompt = generate_archive_summary(source=SOURCE_MODE)
@@ -9,7 +9,7 @@ prompt = generate_archive_summary(source=SOURCE_MODE)
 if "nothing" in prompt.lower():
     print(prompt)
 else:
-    print(f"\n🧠 SoulSpeak summary based on: {SOURCE_MODE.upper()}")
+    print(f"\nSoulSpeak summary based on: {SOURCE_MODE.upper()}")
     print(prompt)
 
     response = requests.post(
@@ -21,5 +21,5 @@ else:
         }
     )
 
-    print("\n💬 SoulSpeak reflects:")
+    print("\nSoulSpeak reflects:")
     print(response.json()["response"].strip())

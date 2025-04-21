@@ -48,7 +48,7 @@ def soul_speak_instance(input_text, memory_path):
     return reflection
 
 
-# 🔹 New: Generate random thought to begin conversation
+# New: Generate random thought to begin conversation
 def generate_initial_thought():
     prompt = """
 Create a natural, introspective statement someone might say at the start of a quiet, personal conversation. Keep it short and emotionally sincere. Do not ask questions. Limit to 1-2 sentences.
@@ -66,7 +66,7 @@ Create a natural, introspective statement someone might say at the start of a qu
     return response.json()["response"].strip()
 
 
-# 🔹 Conversation starts here
+# Conversation starts here
 if __name__ == "__main__":
     print("SoulSpeak A and B are beginning their conversation...\n")
 

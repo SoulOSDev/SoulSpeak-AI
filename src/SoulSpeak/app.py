@@ -30,14 +30,14 @@ def clear():
 
 def journal_entry():
     clear()
-    print("📝 New Journal Entry\n")
+    print("New Journal Entry\n")
     user_input = input("What’s on your mind today?\n\n> ").strip()
     if not user_input:
-        print("⚠️ Entry was empty. Returning to menu.")
+        print("Entry was empty. Returning to menu.")
         return
 
     if is_duplicate_memory(user_input):
-        print("⚠️ This seems identical to your last entry. Not saved.")
+        print("This seems identical to your last entry. Not saved.")
         return
 
     cleaned = preprocess(user_input)
@@ -52,22 +52,22 @@ def journal_entry():
         update_last_trend_check()
 
     save_memory(memory)
-    print("\n💬 SoulSpeak says:\n")
+    print("\nSoulSpeak says:\n")
     print(reflection)
     pause()
 
 def view_recent_memories():
     clear()
-    print("📘 Recent Memories\n")
+    print("Recent Memories\n")
     memories = load_memories()
     for mem in memories[-5:]:
         print(f"{mem['timestamp']} - {', '.join(mem['tags'])}")
-        print(f"📝 {mem['text']}\n")
+        print(f"{mem['text']}\n")
     pause()
 
 def check_trends():
     clear()
-    print("📊 Emotional Trend Check\n")
+    print("Emotional Trend Check\n")
     memories = load_memories(include_archive=True)
     tags = summarize_recent_emotions(memories)
     summary = generate_theme_summary(tags)
@@ -79,13 +79,13 @@ def check_trends():
 
 def summarize_old_memories():
     clear()
-    print("📜 Summarize Old Memories\n")
+    print("Summarize Old Memories\n")
     choice = input("Summarize from (archive / active / all)? ").strip().lower()
     prompt = generate_archive_summary(source=choice)
     if "nothing" in prompt.lower():
         print(prompt)
     else:
-        print("\n🧠 SoulSpeak Reflects:\n")
+        print("\nSoulSpeak Reflects:\n")
         import requests
         response = requests.post(
             "http://localhost:11434/api/generate",
@@ -96,7 +96,7 @@ def summarize_old_memories():
 
 def archive_old():
     clear()
-    print("🗂️ Archiving old memories (30+ days)...\n")
+    print("Archiving old memories (30+ days)...\n")
     archive_old_memories()
     pause()
 
