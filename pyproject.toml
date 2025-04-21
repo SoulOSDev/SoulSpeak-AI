@@ -1,0 +1,98 @@
+# This project was generated with 0.3.22 using template: https://github.com/beeware/briefcase-template@v0.3.22
+[tool.briefcase]
+project_name = "SoulSpeak"
+bundle = "com.christianharris.soulspeak"
+version = "0.0.1"
+url = "https://soulspeak.christianharris.com/SoulSpeak"
+license.file = "LICENSE"
+author = "Christian Harris"
+author_email = "maverickoutlaw123@gmail.com"
+
+[tool.briefcase.app.SoulSpeak]
+formal_name = "SoulSpeak"
+description = "A private, emotionally intelligent companion"
+long_description = """More details about the app should go here.
+"""
+sources = [
+    "src/SoulSpeak",
+]
+test_sources = [
+    "tests",
+]
+console_app = true
+
+requires = [
+    # Add your cross-platform app requirements here
+]
+test_requires = [
+    "pytest",
+]
+
+[tool.briefcase.app.SoulSpeak.macOS]
+universal_build = true
+requires = [
+    # Add your macOS-specific app requirements here
+]
+
+[tool.briefcase.app.SoulSpeak.linux]
+requires = [
+    # Add your Linux-specific app requirements here
+]
+
+[tool.briefcase.app.SoulSpeak.linux.system.debian]
+system_requires = [
+    # Add any system packages needed at build the app here
+]
+
+system_runtime_requires = [
+    # Add any system packages needed at runtime here
+]
+
+[tool.briefcase.app.SoulSpeak.linux.system.rhel]
+system_requires = [
+    # Add any system packages needed at build the app here
+]
+
+system_runtime_requires = [
+    # Add any system packages needed at runtime here
+]
+
+[tool.briefcase.app.SoulSpeak.linux.system.suse]
+system_requires = [
+    # Add any system packages needed at build the app here
+]
+
+system_runtime_requires = [
+    # Add any system packages needed at runtime here
+]
+
+[tool.briefcase.app.SoulSpeak.linux.system.arch]
+system_requires = [
+    # Add any system packages needed at build the app here
+]
+
+system_runtime_requires = [
+    # Add any system packages needed at runtime here
+]
+
+[tool.briefcase.app.SoulSpeak.linux.flatpak]
+flatpak_runtime = "org.freedesktop.Platform"
+flatpak_runtime_version = "24.08"
+flatpak_sdk = "org.freedesktop.Sdk"
+
+[tool.briefcase.app.SoulSpeak.windows]
+requires = [
+    # Add your Windows-specific app requirements here
+]
+
+# Mobile deployments
+[tool.briefcase.app.SoulSpeak.iOS]
+supported = false
+
+[tool.briefcase.app.SoulSpeak.android]
+supported = false
+
+# Web deployments
+[tool.briefcase.app.SoulSpeak.web]
+supported = false
+
