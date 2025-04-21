@@ -1,5 +1,6 @@
 import requests
 import random
+from .memory_utils import calculate_priority
 # Choose tone based on emotion tags
 def choose_tone(tags):
     if any(tag in tags for tag in ["hopeful", "grateful", "fulfilled", "loving"]):
@@ -16,7 +17,27 @@ def choose_tone(tags):
 # Build a reflection prompt
 def generate_reflection_prompt(memory):
     tone = choose_tone(memory["tags"])
-    
+    priority = calculate_priority(memory)
+
+    if priority >= 0.75:
+        style_lines = [
+            "Speak with deeper emotional intuition.",
+            "Let your response carry quiet weight and presence.",
+            "Acknowledge the depth of what they shared with care."
+        ]
+    elif priority >= 0.4:
+        style_lines = [
+            "Speak with calm sincerity.",
+            "Offer a grounded, thoughtful reflection.",
+            "Keep it emotionally aware but not heavy."
+        ]
+    else:
+        style_lines = [
+            "Respond gently and briefly.",
+            "Keep it light and present, like a passing thought.",
+            "Use only a few warm, simple words."
+        ]
+
     # Opening variations
     opening_lines = [
         "You are SoulSpeak — a calm, emotionally intelligent voice.",

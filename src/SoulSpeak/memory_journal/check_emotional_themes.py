@@ -78,8 +78,8 @@ def generate_theme_summary(tag_counts: List[tuple]) -> str:
 
 def compare_emotional_trends(memories: List[dict], window_size=5) -> str:
     if len(memories) < window_size * 2:
-        return "You're still early in your journey — let's collect more before drawing conclusions."
-
+        return None
+    
     # Split into two halves
     recent = memories[-window_size:]
     previous = memories[-(window_size * 2):-window_size]
