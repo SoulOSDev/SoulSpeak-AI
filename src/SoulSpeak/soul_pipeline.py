@@ -40,14 +40,18 @@ def soul_speak_pipeline(user_input: str) -> dict:
     sentiment_score = classify_sentiment_mistral(cleaned)
 
     # Step 4: Build Memory
-    memory = build_memory(user_input, emotion_tags, sentiment_score)
+    memory = build_memory(user_input, emotion_tags, sentiment_score, memory_type="journal")
 
     # Step 5: Reflect
     reflection = generate_reflection(memory)
     trend_reflection = ""
 
+    from memory_journal.memory_store import calculate_priority
+
     if should_generate_trend_summary(days=3):
         memories = load_memories(include_archive=True) # Change to =False to toggle archive
+        sorted_memories = sorted(memories, key=calculate_priority, reverse=True)
+        
         tag_summary = summarize_recent_emotions(memories, limit=10)
         trend_reflection = compare_emotional_trends(memories)
         update_last_trend_check()
@@ -61,7 +65,7 @@ def soul_speak_pipeline(user_input: str) -> dict:
     full_reflection = reflection
     if trend_reflection:
         full_reflection += "\n\n" + trend_reflection
-    
+
     return {
         "reflection": full_reflection,
         "memory": memory

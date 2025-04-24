@@ -1,9 +1,13 @@
 from datetime import datetime
 from typing import List
-from SoulSpeak.memory_journal.check_emotional_themes import load_memories
+from .check_emotional_themes import load_memories
 from datetime import datetime, timedelta
 
+from .memory_utils import calculate_priority
+from datetime import datetime, timezone, timedelta
+
 def archive_old_memories(days_old=30,
+                          priority_threshold=0.3,
                           active_path="data/memory_log.json",
                           archive_path="data/archive_log.json"):
 
@@ -11,19 +15,39 @@ def archive_old_memories(days_old=30,
     if not active:
         return
 
-    cutoff = datetime.now() - timedelta(days=days_old)
+    cutoff = datetime.now(timezone.utc) - timedelta(days=days_old)
     keep = []
     archive = []
 
     for mem in active:
         try:
             timestamp = datetime.fromisoformat(mem["timestamp"])
-            if timestamp < cutoff:
-                archive.append(mem)
-            else:
-                keep.append(mem)
         except Exception:
-            keep.append(mem)  # Keep malformed entries
+            timestamp = datetime.now(timezone.utc)
+
+        priority = calculate_priority(mem)
+        age_trigger = timestamp < cutoff
+        priority_trigger = priority < priority_threshold
+
+        if age_trigger or priority_trigger:
+            archive.append(mem)
+        else:
+            keep.append(mem)
+
+    # Save updated memory log and archive
+    with open(active_path, "w", encoding="utf-8") as f:
+        json.dump(keep, f, indent=4)
+
+    with open(archive_path, "r+", encoding="utf-8") as f:
+        try:
+            existing_archive = json.load(f)
+        except Exception:
+            existing_archive = []
+
+        existing_archive.extend(archive)
+        f.seek(0)
+        json.dump(existing_archive, f, indent=4)
+        f.truncate()
 
     if archive:
         # Append to archive log
@@ -57,7 +81,7 @@ def calculate_weight(score, tags):
 
 from datetime import datetime, timezone
 
-def build_memory(text, tags, sentiment):
+def build_memory(text, tags, sentiment, memory_type="journal"):
     """
     Creates a memory object ready for storage or reflection.
     """
@@ -66,8 +90,9 @@ def build_memory(text, tags, sentiment):
         "tags": tags,
         "sentiment": sentiment,
         "weight": calculate_weight(sentiment, tags),
+        "type": memory_type,
         "timestamp": datetime.now(timezone.utc).isoformat()
-    }
+        }
 
 import json
 import os
@@ -128,7 +153,30 @@ def search_memories(tags=None, keywords=None, since=None, file_path="data/memory
 
     return results
 
-def is_duplicate_memory(new_memory: dict, file_path="data/memory_log.json") -> bool:
+from datetime import datetime
+from .check_emotional_themes import load_memories
+
+def calculate_priority(memory):
+    """
+    Returns a priority score (0.0 to 1.0) based on emotional intensity and recency.
+    """
+    intensity = memory.get("emotional_intensity", 0.0)
+    timestamp_str = memory.get("timestamp")
+
+    if not timestamp_str:
+        return intensity  # fallback: use intensity alone
+
+    try:
+        timestamp = datetime.fromisoformat(timestamp_str)
+        days_ago = (datetime.now() - timestamp).days
+        recency_weight = max(0.0, 1.0 - (days_ago / 30.0))  # score drops over 30 days
+    except Exception:
+        recency_weight = 0.5  # fallback
+
+    priority_score = (0.7 * intensity) + (0.3 * recency_weight)
+    return round(priority_score, 3)
+
+def is_duplicate_memory(new_text: str, file_path="data/memory_log.json") -> bool:
     memories = load_memories(file_path)
     if not memories:
         return False
