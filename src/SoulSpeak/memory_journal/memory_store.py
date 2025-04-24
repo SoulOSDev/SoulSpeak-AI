@@ -182,4 +182,4 @@ def is_duplicate_memory(new_text: str, file_path="data/memory_log.json") -> bool
         return False
 
     last = memories[-1]
-    return last.get("text", "").strip() == new_text.strip()
+    return last.get("text", "").strip() == new_memory.get("text", "").strip()

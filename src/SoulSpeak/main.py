@@ -1,3 +1,5 @@
+# pyright: reportUndefinedVariable=false
+
 from brain import Brain
 import random
 
@@ -12,25 +14,29 @@ OPENING_MESSAGES = [
 ]
 
 def main():
-    brain = Brain()
-
-    print(random.choice(OPENING_MESSAGES))
-    print("(Type 'exit' to end the conversation.)")
+    print(f"\nWelcome back, {USERNAME}. I’ll keep things {TONE} today.\n")
 
     while True:
-        try:
-            user_input = input("🗣️ You: ")
+        user_input = input(f"{USERNAME}: ").strip()
+        if not user_input:
+            continue
 
-            if user_input.lower() in ["exit", "quit", "bye"]:
-                print("🕯️ Soul_AI: Goodbye. I'll remember this.")
-                break
-
-            response = brain.process(user_input)
-            print(f"Soul_AI: {response}\n")
-
-        except KeyboardInterrupt:
-            print("\nSoul_AI: Conversation interrupted. Until next time.")
+        if user_input.lower() in {"exit", "bye", "quit"}:
+            print("Goodbye. Your memories are safe.")
             break
+
+        preprocessed = preprocess(user_input)
+        emotions = classify_emotions_mistral(preprocessed)
+        sentiment = classify_sentiment_mistral(preprocessed)
+        memory = build_memory(preprocessed, emotions, sentiment)
+
+        if is_duplicate_memory(memory):
+            print("SoulSpeak: I remember you saying something like this before.")
+        else:
+            save_memory(memory)
+
+        response = generate_reflection(memory)
+        print(f"SoulSpeak: {response}")
 
 if __name__ == "__main__":
     main()
