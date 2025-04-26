@@ -1,3 +1,7 @@
+from typing import Dict, Any
+
+__all__ = ["analyze_input"]
+
 import re
 
 # Simple keyword maps for reflection
@@ -16,7 +20,7 @@ EMOTION_TAGS = {
     "longing": ["miss", "used to", "want to", "wish", "could have"]
 }
 
-def analyze_input(text: str) -> dict:
+def analyze_input(text: str) -> Dict[str, Any]:
     lowered = text.lower()
 
     # Detect intent

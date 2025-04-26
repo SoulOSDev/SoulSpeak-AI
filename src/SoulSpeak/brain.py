@@ -3,7 +3,7 @@ from memory import Memory
 import difflib
 from prompt_builder import build_reflection_prompt
 import ollama
-from reflection_prompts import build_reflection_prompt
+# from reflection_prompts import build_reflection_prompt
 from nlu import analyze_input
 
 
@@ -37,6 +37,7 @@ class Brain:
             print("\nGenerated Prompt for Soul_AI:\n")
             print(prompt)
             print("\n" + "="*60 + "\n")
+            
             response = self._craft_reflection(user_input, top_memory, top_tag)
         else:
             response = (
